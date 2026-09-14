@@ -1,6 +1,2 @@
-<<<<<<< Updated upstream
-cfgcgfcgfxfzs
-=======
-herkes
->>>>>>> Stashed changes
-sdf
+merhabalar
+sdfhdfdsbvf

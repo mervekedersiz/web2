@@ -5,13 +5,18 @@ class Urun {
   int stok;
   String tip;
 
-  Urun(this.id, this.ad, this.fiyat, this.stok, this.tip);
+  Urun(
+    this.id,
+    this.ad,
+    this.fiyat,
+    this.stok,
+    this.tip,
+  );
 }
 
 
-// LSP İHLALİ:
-// ESKİ: DijitalUrun, kargo metodunu override edip Exception fırlatıyordu.
-// YENİ: Kargo işlemi Urun sınıfından ayrıldı.
+// LSP düzeltmesi:
+// Dijital ürün artık kargo metodu override edip Exception fırlatmıyor.
 class KargoServisi {
   static const double kargoUcreti = 29.90;
 
@@ -35,7 +40,13 @@ class DijitalUrun extends Urun {
     String ad,
     double fiyat,
     int stok,
-  ) : super(id, ad, fiyat, stok, "DIJITAL");
+  ) : super(
+          id,
+          ad,
+          fiyat,
+          stok,
+          "DIJITAL",
+        );
 }
 
 
@@ -46,9 +57,6 @@ class SqliteVeritabani {
 }
 
 
-// DIP İHLALİ:
-// ESKİ: SiparisYoneticisi doğrudan SqliteVeritabani gibi sınıfları oluşturuyordu.
-// YENİ: Bağımlılıklar SiparisYoneticisi'ne dışarıdan veriliyor.
 class SiparisRepository {
   final SqliteVeritabani db;
 
@@ -62,9 +70,9 @@ class SiparisRepository {
 }
 
 
-// OCP İHLALİ:
-// ESKİ: Ödeme yöntemleri tek bir if-else bloğunda bulunuyordu.
-// YENİ: Her ödeme yöntemi ayrı sınıf olarak tanımlandı.
+// OCP düzeltmesi:
+// Ödeme yöntemleri ayrı sınıflara ayrıldı.
+// Yeni ödeme yöntemi eklemek için mevcut sınıfları değiştirmek gerekmez.
 abstract class OdemeServisi {
   void odemeYap(double tutar);
 }
@@ -119,9 +127,9 @@ class FaturaServisi {
 }
 
 
-// CLEAN CODE:
-// ESKİ: siparisTamamla() çok fazla parametre alıyordu.
-// YENİ: Müşteri bilgileri tek bir sınıfta toplandı.
+// Clean Code düzeltmesi:
+// Müşteri bilgileri tek bir sınıfta toplandı.
+// Böylece sipariş metodundaki parametre sayısı azaltıldı.
 class Musteri {
   String ad;
   String email;
@@ -154,22 +162,21 @@ class Siparis {
 }
 
 
-// SRP İHLALİ:
-// ESKİ: SiparisYoneticisi ödeme, kargo, mail, SMS, fatura,
-// veritabanı ve sipariş işlemlerinin hepsini yapıyordu.
-// YENİ: Bu sorumluluklar ayrı sınıflara ayrıldı.
+// SRP düzeltmesi:
+// Sipariş işlemleri yardımcı sınıflara ayrıldı.
+// SiparisYoneticisi artık işlemleri organize ediyor.
 class SiparisYoneticisi {
   final SiparisRepository siparisRepository;
-  final OdemeServisi odemeServisi;
   final KargoServisi kargoServisi;
   final MailServisi mailServisi;
   final SmsServisi smsServisi;
   final FaturaServisi faturaServisi;
   final IndirimServisi indirimServisi;
 
+  // Clean Code düzeltmesi:
+  // Kullanılmayan odemeServisi parametresi kaldırıldı.
   SiparisYoneticisi({
     required this.siparisRepository,
-    required this.odemeServisi,
     required this.kargoServisi,
     required this.mailServisi,
     required this.smsServisi,
@@ -182,15 +189,14 @@ class SiparisYoneticisi {
       return;
     }
 
-    double toplam = _toplamHesapla(siparis.sepet);
+    final toplam = _toplamHesapla(siparis.sepet);
 
-    toplam = indirimServisi.indirimUygula(
+    final indirimliToplam = indirimServisi.indirimUygula(
       toplam,
       siparis.kuponKodu,
     );
 
-    final kdv = toplam * 0.20;
-    final sonTutar = toplam + kdv;
+    final sonTutar = _kdvEkle(indirimliToplam);
 
     siparis.odemeServisi.odemeYap(sonTutar);
 
@@ -203,19 +209,12 @@ class SiparisYoneticisi {
 
     faturaServisi.faturaOlustur(siparis.id);
 
-    mailServisi.mailGonder(
-      siparis.musteri.email,
-      "Sayın ${siparis.musteri.ad}, "
-      "siparişiniz alındı. Tutar: $sonTutar TL",
-    );
-
-    smsServisi.smsGonder(
-      siparis.musteri.telefon,
-      "Siparişiniz onaylandı: ${siparis.id}",
-    );
+    _mailGonder(siparis, sonTutar);
+    _smsGonder(siparis);
 
     _kargoGonder(siparis);
   }
+
 
   bool _stokKontrolEt(List<Urun> sepet) {
     for (final urun in sepet) {
@@ -228,6 +227,7 @@ class SiparisYoneticisi {
     return true;
   }
 
+
   double _toplamHesapla(List<Urun> sepet) {
     double toplam = 0;
 
@@ -239,11 +239,49 @@ class SiparisYoneticisi {
     return toplam;
   }
 
+
+  // Clean Code düzeltmesi:
+  // KDV oranı magic number olmaktan çıkarıldı.
+  double _kdvEkle(double toplam) {
+    const kdvOrani = 0.20;
+
+    return toplam + (toplam * kdvOrani);
+  }
+
+
   void _stokAzalt(List<Urun> sepet) {
     for (final urun in sepet) {
       urun.stok--;
     }
   }
+
+
+  void _mailGonder(
+    Siparis siparis,
+    double sonTutar,
+  ) {
+    final mesaj =
+        "Sayın ${siparis.musteri.ad}, "
+        "siparişiniz alındı. "
+        "Tutar: $sonTutar TL";
+
+    mailServisi.mailGonder(
+      siparis.musteri.email,
+      mesaj,
+    );
+  }
+
+
+  void _smsGonder(Siparis siparis) {
+    final mesaj =
+        "Siparişiniz onaylandı: ${siparis.id}";
+
+    smsServisi.smsGonder(
+      siparis.musteri.telefon,
+      mesaj,
+    );
+  }
+
 
   void _kargoGonder(Siparis siparis) {
     final fizikselUrunVar = siparis.sepet.any(
@@ -259,9 +297,8 @@ class SiparisYoneticisi {
 }
 
 
-// CLEAN CODE:
-// ESKİ: Kupon hesaplama SiparisYoneticisi içinde uzun if-else ile yapılıyordu.
-// YENİ: İndirim işlemi ayrı bir sınıfa taşındı.
+// Clean Code / SRP düzeltmesi:
+// İndirim işlemi SiparisYoneticisi'nden ayrıldı.
 class IndirimServisi {
   double indirimUygula(
     double toplam,
@@ -319,7 +356,6 @@ void main() {
     siparisRepository: SiparisRepository(
       SqliteVeritabani(),
     ),
-    odemeServisi: KrediKartiOdeme(),
     kargoServisi: KargoServisi(),
     mailServisi: MailServisi(),
     smsServisi: SmsServisi(),

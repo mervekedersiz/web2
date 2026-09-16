@@ -63,4 +63,4 @@ KahveSiparisYoneticisi sınıfı; indirim hesaplama, kredi kartından tahsilat y
 
 2. OCP (Open/Closed Principle) İhlali:
 
-indirimHesapla fonksiyonunda yeni bir müşteri tipi (örn. "DOKTOR") eklendiğinde mevcut if-else bloğunun değiştirilmek zorunda kalması Open/Closed Principle'a aykırıdır. Bu prensibe göre sınıflar yeni davranışlara karşı genişlemeye açık, ancak mevcut koda müdahaleye kapalı olmalıdır; burada ise her yeni müşteri tipi geldiğinde var olan kodun değiştirilmesi gerekmektedir.
+indirimHesapla fonksiyonunda yeni bir müşteri tipi (örn. "DOKTOR") eklendiğinde mevcut if-else bloğunun değiştirilmek zorunda kalması Open/Closed Principle'a aykırıdır. Bu prensibe göre sınıflar yeni davranışlara karşı genişlemeye açık, ancak mevcut koda müdahaleye kapalı olmalıdır; burada ise her yeni müşteri tipi geldiğinde var olan kodun değiştirilmesi gerekmektedir. 

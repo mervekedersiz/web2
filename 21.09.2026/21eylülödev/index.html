@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Akıllı Telefon</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        video, iframe {
+            width: 560px;
+            max-width: 100%;
+        }
+
+        meter {
+            width: 300px;
+        }
+
+        dialog {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Akıllı Telefon</h2>
+
+    <p>
+        Günlük kullanım için tasarlanmış modern ve kullanışlı
+        bir akıllı telefondur.
+    </p>
+
+
+    <h3>Tanıtım Videosu</h3>
+
+    <!-- Video etiketi -->
+    <video playsinline controls>
+        <source
+            src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+            type="video/mp4">
+    </video>
+
+
+    <h3>Ürün Videosu - iframe</h3>
+
+    <!-- video.html dosyasını iframe içinde açıyoruz -->
+    <iframe
+        src="video.html"
+        title="Akıllı Telefon Tanıtım Videosu">
+    </iframe>
+
+
+    <h3>Stok Durumu</h3>
+
+    <meter
+        value="70"
+        min="0"
+        max="100">
+    </meter>
+
+    <p>Stok durumu: %70</p>
+
+
+    <h3>Sıkça Sorulan Sorular</h3>
+
+    <details>
+        <summary>Telefonun ekranı kaliteli mi?</summary>
+
+        <p>
+            Yüksek çözünürlüklü ekranı sayesinde
+            kaliteli görüntü sunar.
+        </p>
+    </details>
+
+
+    <details>
+        <summary>Şarjı uzun süre dayanıyor mu?</summary>
+
+        <p>
+            Günlük kullanım için yeterli pil kapasitesine sahiptir.
+        </p>
+    </details>
+
+
+    <h3>Detaylı Bilgi</h3>
+
+    <button onclick="document.getElementById('bilgi').showModal()">
+        Detaylı Bilgi Al
+    </button>
+
+
+    <dialog id="bilgi">
+
+        <h3>Akıllı Telefon</h3>
+
+        <p>
+            Modern tasarıma ve yüksek performansa sahip
+            bir akıllı telefondur.
+        </p>
+
+        <p>Fiyat: 24.999 TL</p>
+
+        <button onclick="document.getElementById('bilgi').close()">
+            Kapat
+        </button>
+
+    </dialog>
+
+</body>
+</html>

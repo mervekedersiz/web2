@@ -6,93 +6,8 @@
 <title>AşkoKuşko Takı</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ivory:#FAF7F5;--paper:#fff;--ink:#1A1A1A;--soft:#736B66;
-  --gold:#C5A880;--gold-d:#9C7A4E;--rose:#A83E58;--line:#EAE3DC;
-  --bar:70px;--nav:58px;
-}
-body{font-family:'Inter',sans-serif;color:var(--ink);background:#F0ECE6;display:flex;justify-content:center}
-.device{width:100%;max-width:480px;min-height:100vh;background:var(--ivory);position:relative;padding-bottom:calc(var(--bar) + 20px);box-shadow:0 0 40px rgba(0,0,0,.12)}
-
-/* Sticky menü */
-.topnav{position:sticky;top:0;z-index:30;height:var(--nav);background:rgba(250,247,245,.95);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}
-.icon-btn{width:34px;height:34px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:21px;letter-spacing:2.5px;text-transform:uppercase}
-
-/* Görsel + absolute rozetler */
-.product-media{position:relative;aspect-ratio:1/1;overflow:hidden;background:#E8E2DC}
-.product-media img{width:100%;height:100%;object-fit:cover}
-.badge{position:absolute;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:700;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.18)}
-.badge.discount{top:14px;left:14px;background:var(--rose)}
-.badge.shipping{top:14px;right:14px;background:var(--gold-d)}
-.fav-btn{position:absolute;bottom:14px;right:14px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 10px rgba(0,0,0,.15)}
-
-/* Galeri */
-.gallery{display:flex;gap:10px;padding:12px 16px 0}
-.thumb{width:66px;height:66px;border-radius:10px;border:2px solid transparent;overflow:hidden;cursor:pointer}
-.thumb img{width:100%;height:100%;object-fit:cover}
-.thumb.active{border-color:var(--gold)}
-
-/* Bilgi */
-.info{padding:16px 16px 4px}
-.eyebrow{font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--gold-d);font-weight:600;margin-bottom:4px}
-.info h1{font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.2}
-.rating{margin-top:6px;display:flex;gap:6px;font-size:13px;color:var(--soft)}
-.rating .stars{color:#D4A017}
-.price-row{margin-top:10px;display:flex;align-items:baseline;gap:8px}
-.price-row .now{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:700;color:var(--rose)}
-.price-row .old{font-size:14px;color:var(--soft);text-decoration:line-through}
-.desc{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--soft)}
-.sku-line{margin-top:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px;color:var(--soft);border:1px solid var(--line);background:var(--paper);padding:8px 10px;border-radius:8px}
-
-/* CSS özgüllük (specificity) demosu */
-button{background:gray;color:#fff;border:none;font-size:13px;cursor:pointer}                     /* puan 1 */
-.campaign-btn{background:var(--gold);padding:10px 18px;border-radius:10px;font-weight:600}       /* puan 10 */
-button.campaign-btn{box-shadow:0 4px 12px rgba(197,168,128,.45)}                                  /* puan 11 */
-#specialOfferBtn{background:linear-gradient(135deg,var(--rose),var(--gold-d));color:#fff}         /* puan 100 — kazanan */
-.campaign-row{margin:16px 16px 0;display:flex;align-items:center;justify-content:space-between;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.campaign-row p{font-size:12.5px;color:var(--soft);max-width:220px}
-
-/* Çipler (flex-wrap + gap) */
-.section-title{padding:18px 16px 8px;font-size:13px;font-weight:700}
-.chip-list{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px}
-.chip{padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--paper);font-size:13.5px;font-weight:600;cursor:pointer}
-.chip.selected{background:var(--rose);border-color:var(--rose);color:#fff}
-.chip.disabled{color:#CFC6B4;text-decoration:line-through;cursor:not-allowed}
-
-/* Sekmeler */
-.tabs{display:flex;gap:22px;padding:20px 16px 0;border-bottom:1px solid var(--line)}
-.tabs span{padding-bottom:10px;font-size:13.5px;color:var(--soft);font-weight:600;cursor:pointer}
-.tabs span.active{color:var(--rose);border-bottom:2px solid var(--rose)}
-.tab-content{padding:14px 16px 4px;font-size:13px;line-height:1.7;color:var(--soft);display:none}
-.tab-content.active{display:block}
-
-/* Sohbet balonu (yorumlar) */
-.review-row{display:flex;gap:10px;align-items:flex-end;padding:0 16px;margin-top:12px}
-.review-avatar{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--gold-d);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.review-bubble{background:var(--paper);border:1px solid var(--line);padding:10px 14px;border-radius:14px 14px 14px 4px;font-size:12.5px;line-height:1.5;max-width:78%}
-.review-bubble strong{display:block;font-size:12px;margin-bottom:2px}
-.review-row.shop-reply{flex-direction:row-reverse}
-.review-row.shop-reply .review-avatar{background:var(--rose)}
-.review-row.shop-reply .review-bubble{background:var(--rose);color:#fff;border:none;border-radius:14px 14px 4px 14px}
-
-/* İlgili ürünler */
-.related{display:flex;gap:12px;padding:12px 16px 0;overflow-x:auto}
-.related-card{flex:0 0 135px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.rc-media{height:100px;overflow:hidden}
-.rc-media img{width:100%;height:100%;object-fit:cover}
-.rc-info{padding:8px}
-.rc-info .name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc-info .p{font-size:12px;color:var(--rose);font-weight:700;margin-top:3px}
-
-/* Fixed alt bar */
-.bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--bar);background:var(--paper);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:40;box-shadow:0 -6px 18px rgba(0,0,0,.06)}
-.price-block .label{font-size:11px;color:var(--soft)}
-.price-block .value{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--rose)}
-.add-to-cart{border:none;background:var(--rose);color:#fff;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;cursor:pointer}
-</style>
+<!-- Hocanın istediği external CSS bağlantısı -->
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="device">
@@ -104,17 +19,30 @@ button.campaign-btn{box-shadow:0 4px 12px rgba(197,168,128,.45)}                
   </nav>
 
   <div class="product-media">
-    <img id="mainImage" src="./1DEN.jpg" alt="Halo Yüzük">
+    <!-- Parmakla yana kaydırılabilir (swipe) görsel şeridi -->
+    <div class="media-track" id="mediaTrack">
+      <div class="media-slide"><img src="./1DEN.jpg" alt="Halo Yüzük 1"></div>
+      <div class="media-slide"><img src="./2DEN.jpg" alt="Halo Yüzük 2"></div>
+      <div class="media-slide"><img src="./3DEN.jpg" alt="Halo Yüzük 3"></div>
+      <div class="media-slide"><img src="./4DEN.jpg" alt="Halo Yüzük 4"></div>
+    </div>
     <span class="badge discount">%25 İndirim</span>
     <span class="badge shipping">Sigortalı Kargo</span>
     <div class="fav-btn">&#9825;</div>
+    <!-- Kaç görsel olduğunu ve hangisinde olduğunu gösteren noktalar -->
+    <div class="dots" id="mediaDots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
   </div>
 
-  <div class="gallery">
-    <div class="thumb active" data-img="./1DEN.jpg"><img src="./1DEN.jpg" alt=""></div>
-    <div class="thumb" data-img="./2DEN.jpg"><img src="./2DEN.jpg" alt=""></div>
-    <div class="thumb" data-img="./3DEN.jpg"><img src="./3DEN.jpg" alt=""></div>
-    <div class="thumb" data-img="./4DEN.jpg"><img src="./4DEN.jpg" alt=""></div>
+  <div class="gallery" id="gallery">
+    <div class="thumb active" data-index="0"><img src="./1DEN.jpg" alt=""></div>
+    <div class="thumb" data-index="1"><img src="./2DEN.jpg" alt=""></div>
+    <div class="thumb" data-index="2"><img src="./3DEN.jpg" alt=""></div>
+    <div class="thumb" data-index="3"><img src="./4DEN.jpg" alt=""></div>
   </div>
 
   <div class="info">
@@ -174,14 +102,29 @@ button.campaign-btn{box-shadow:0 4px 12px rgba(197,168,128,.45)}                
 </div>
 
 <script>
+const track = document.getElementById('mediaTrack');
+const dots  = document.querySelectorAll('#mediaDots .dot');
+const thumbs = document.querySelectorAll('#gallery .thumb');
+
+// Bir slayta git (thumbnail tıklanınca kullanılır)
+function goToSlide(index) {
+  track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
+}
+
+// Kullanıcı parmağıyla yana kaydırınca hangi slaytta olduğumuzu bulup
+// noktaları ve aktif thumbnail'ı buna göre günceller
+track.addEventListener('scroll', () => {
+  const index = Math.round(track.scrollLeft / track.clientWidth);
+  dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+});
+
 // Tek tıklama dinleyicisi (event delegation) — galeri, çip ve sekmeleri tek yerden yönetir
 document.addEventListener('click', e => {
 
   const thumb = e.target.closest('.thumb');
   if (thumb) {
-    document.getElementById('mainImage').src = thumb.dataset.img;
-    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-    thumb.classList.add('active');
+    goToSlide(Number(thumb.dataset.index));
   }
 
   const chip = e.target.closest('.chip:not(.disabled)');

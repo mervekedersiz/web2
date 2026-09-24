@@ -1,0 +1,28 @@
+Flexbox vs CSS Grid
+Flexbox tek boyutludur; elemanları sadece satır veya sadece sütun ekseninde hizalar, buton dizilimi veya menüler için uygundur. CSS Grid iki boyutludur; satır ve sütunları aynı anda yönetir, sayfa şablonu ve galeri düzenleri için uygundur.
+
+1. fr Biriminin Yüzde Birimine Göre Avantajı
+Yüzde birimi boşlukları hesaba katmadığı için gap eklendiğinde genişlik toplamı taşmaya yol açar. fr birimi ise tüm boşluklar düşüldükten sonra kalan net alanı paylaştırır ve taşmayı önler.
+2. Mobile-First Yaklaşımının Tercih Sebebi
+Mobil cihazların donanımı ve bant genişliği daha kısıtlıdır. Temel ve sade stilleri önce yükleyip ekran büyüdükçe min-width ile yeni özellikler eklemek performansı artırır, gereksiz kod ezilmesini engeller.
+3. transform ve opacity Kullanımının Nedeni
+Top, left ve width özellikleri tarayıcının layout aşamasını tetikleyerek işlemciyi yorar ve animasyonu takılmaya uğratır. Transform ve opacity ise doğrudan grafik işlemcisi üzerinden işlendiği için takılmasız ve akıcı çalışır.
+4. auto-fit ve minmax Birlikteliği
+Minmax sütunun minimum ve maksimum sınırını çizer, auto-fit ise satıra sığabilen kadar sütun yerleştirir. Bu sayede medya sorgusu yazmadan ekran boyutuna göre otomatik uyum sağlayan responsive ızgaralar elde edilir.
+5. grid-template-areas Kurumsal Avantajı
+Sayfa yapısını CSS içinde metinsel bir harita gibi görmeyi sağlar. Kalabalık ekiplerde kodun okunmasını kolaylaştırır ve duyarlı tasarımlarda blokların sırasını tek hamlede değiştirmeye imkan tanır.
+6. clamp Fonksiyonunun 3 Parametresi
+
+* İlk parametre: Değerin inebileceği taban sınır yani minimum değer.
+* İkinci parametre: Ekran boyutuna göre değişen ideal ve esnek değer.
+* Üçüncü parametre: Değerin çıkabileceği tavan sınır yani maksimum değer.
+
+8. Sonsuz Animasyon Kuralı
+Animasyonun kesintisiz dönmesi için animation-iteration-count özelliğine infinite değeri verilir.
+9. Flutter Karşılıkları
+
+* CSS Grid karşılıkları: GridView, GridView.count ve GridView.builder.
+* Flexbox karşılıkları: Row, Column, Flex, Wrap ile boyut dağılımı için Expanded ve Flexible.
+
+10. React Native İçinde Grid Yapısı
+React Native varsayılan olarak CSS Grid desteklemez, Yoga motoruyla sadece Flexbox kullanır. Izgara oluşturmak için en yaygın yol FlatList bileşenine numColumns değeri vermektir ya da flexDirection row ve flexWrap wrap kullanarak elemanlara yüzde genişliği tanımlamaktır.
